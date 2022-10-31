@@ -1,0 +1,28 @@
+authors: Jonas Sobotta, Sarah Zettl
+
+console output Client:
+
+>SAVE hello world!
+KEY ;Md9kAPlxv;>uA;=
+>GET ;Md9kAPlxv;>uA;=
+OK hello world!
+>SAVE
+KEY 0D%02o6(Q%0VJlvg
+>GET 0D%02o6(Q%0VJlvg
+OK File is empty
+>GET thiskeydoesnotexist
+FAILED
+>READ ;Md9kAPlxv;>uA;=
+Command not found, please check your spelling
+>
+
+console output Server
+
+** Waiting for client at 7777
+** Connected to client: /127.0.0.1:54410
+** Connected to client: /127.0.0.1:54412
+** Connected to client: /127.0.0.1:54413
+** Connected to client: /127.0.0.1:54414
+** Connected to client: /127.0.0.1:54415
+** Connected to client: /127.0.0.1:54417
+** Connected to client: /127.0.0.1:54418

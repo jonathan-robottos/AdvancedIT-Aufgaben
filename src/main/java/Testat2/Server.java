@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Server {
    public static final int PORT = 7777;
-   public static final String PATH = "D:\\Development\\AdvancedIT-Aufgaben\\src\\main\\java\\Testat2\\Messages\\";
+   public static final String PATH = "D:\\Development\\AdvancedIT-Aufgaben\\src\\main\\java\\Testat2\\Messages\\"; //PATH for storing files
 
    public static void main(String[] args) {
 
@@ -67,7 +67,13 @@ public class Server {
 
                      if(myFile.exists()){
                         BufferedReader myReader = new BufferedReader(new FileReader(myFile));
-                        clientOut.println("OK " + myReader.readLine());
+                        String s = myReader.readLine();
+
+                        if(s == null){
+                           clientOut.println("OK " + "File is empty");
+                        }else {
+                           clientOut.println("OK " + s);
+                        }
                      }else{
                         clientOut.println("FAILED");
                      }
