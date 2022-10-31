@@ -10,10 +10,16 @@ public class Server {
    public static final int PORT = 7777;
    public static final String PATH = "D:\\Development\\AdvancedIT-Aufgaben\\src\\main\\java\\Testat2\\Messages\\";
 
+   private static KeyPair kp;
+   public static PublicKey pub;
    public static void main(String[] args) {
 
       //declare variables
       Socket client = null;
+      SecurityService secserv = new SecurityService();
+      kp = secserv.gnerateKey();
+      pub = kp.getPublic();
+      PrivateKey priv = kp.getPrivate();
 
       try {
          //server setup
@@ -51,7 +57,8 @@ public class Server {
 
                      //send key to client
                      String key = sb.toString();
-                     clientOut.println("KEY " + key);
+                     byte[] response = secserv.encrypt(key, Client.pub);
+                     clientOut.println("KEY " + response);
 
                      //create File
                      File myFile = new File(PATH + hash);
