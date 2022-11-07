@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Server {
    public static final int PORT = 7777;
-   public static final String PATH = "D:\\Development\\AdvancedIT-Aufgaben\\src\\main\\java\\Testat2\\Messages\\"; //PATH for storing files
+   public static final String PATH = "C:\\Users\\root\\Desktop\\Messages\\"; //PATH for storing files
 
    public static void main(String[] args) {
 
