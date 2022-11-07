@@ -6,14 +6,12 @@ import java.net.SocketException;
 
 public class Worker extends Thread {
     private static final String wdir = "D:\\Development\\AdvancedIT-Aufgaben\\src\\main\\java\\Testat3\\Messages\\"; //PATH for storing files
+    Monitor monitor;
     private int id;
-    private int port;
-    private DatagramPacket dp;
 
-    public Worker(int id, DatagramPacket dp, int port) {
+    public Worker(int id) {
         this.id = id;
-        this.dp = dp;
-        this.port = port;
+        monitor = new Monitor();
     }
 
     public void run() {
@@ -25,18 +23,26 @@ public class Worker extends Thread {
         MyFile f = null;
         String answer = "∗∗∗ ERROR 900: unknown error ";
         String newData = "";
-        DatagramPacket dp2 = null;
 
         DatagramSocket ds = null;
-        try {
-            ds = new DatagramSocket(port);
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
+        DatagramPacket dp2 = null;
+        DatagramPacket dp = null;
 
         try {
+            ds = new DatagramSocket();
+            dp = FileServer.ringBuffer.remove();
             dpData = new String(dp.getData(), 0, dp.getLength()).trim();
             if (dpData.startsWith("READ ")) {
+
+                monitor.startRead();
+                System.out.println("Worker Thread " + Thread.currentThread().getName() +  "is reading");
+
+                try {
+                    Thread.sleep(5000L); //Nebenläufigkeit testen
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 try {
                     param = dpData.split(" ", 2);
                     param2 = param[1].split(",", 2);
@@ -48,7 +54,19 @@ public class Worker extends Thread {
                     answer = "∗∗∗ ERROR 901: bad READ command ";
                     throw new Exception(e);
                 } // catch
+                monitor.endRead();
+
             } else if (dpData.startsWith("WRITE ")) {
+
+                monitor.startWrite();
+                System.out.println("Worker Thread " + Thread.currentThread().getName() +  "is writing");
+
+                try {
+                    Thread.sleep(5000L); //Nebenläufigkeit testen
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 try {
                     param = dpData.split(" ", 2);
                     param2 = param[1].split(",", 3);
@@ -61,6 +79,8 @@ public class Worker extends Thread {
                     answer = "∗∗∗ ERROR 901: bad WRITE command";
                     throw new Exception(e);
                 } // catch
+
+                monitor.endWrite();
             } else {
                 answer = "∗∗ ERROR 902: unknown command";
                 throw new Exception("Unknown Command");

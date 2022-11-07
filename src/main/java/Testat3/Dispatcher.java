@@ -1,17 +1,15 @@
 package Testat3;
 
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 
 public class Dispatcher {
-
-    public void allocate(RingBuffer ringBuffer, int numberOfThreads, int port){
-        if (ringBuffer.buffer.length != 0){
-            for(int i = 0; i < numberOfThreads; i++){
-                DatagramPacket dp = ringBuffer.remove();
-                Worker worker = new Worker(i, dp, port);
-                worker.start();
-            }
-        }
+    private Worker[] workers;
+    public void initWorkers(int numberOfThreads){
+//        workers = new Worker[numberOfThreads];
+//        for(int i = 0; i < numberOfThreads; i++){
+//            workers[i] = new Worker();
+//            workers[i].start();
 
     }
 }
